@@ -1,7 +1,9 @@
 from backend import get_locs, get_facility_types
-from config import NUM_CRITERIA, POSSIBLE_DISTANCE_OPTIONS, NULL_STRING, NO_RESULT_FOUND_MSG, NON_FACILITY_KEYS
-from flask import Flask, render_template, request
+from config import NUM_CRITERIA, POSSIBLE_DISTANCE_OPTIONS, NULL_STRING, NO_RESULT_FOUND_MSG, NON_FACILITY_KEYS, \
+    MORE_THAN_LIMIT_FOUND_MSG, APP_SECRET_KEY
+from flask import Flask, render_template, request, flash
 app = Flask(__name__)
+app.secret_key = APP_SECRET_KEY
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -28,9 +30,11 @@ def main():
                 projections[ftype] = 1
 
         # search for locations based on criteria
-        results = get_locs(criteria, projections)
-        from pprint import pprint
-        pprint(results)
+        results, more_than_limit_flg, no_result_flg = get_locs(criteria, projections)
+        if more_than_limit_flg:
+            flash(MORE_THAN_LIMIT_FOUND_MSG, 'info')
+        if no_result_flg:
+            flash(NO_RESULT_FOUND_MSG, 'info')
 
         return render_template('main.html', facility_types=facility_types, num_criteria=NUM_CRITERIA,
                                possible_distance_options=POSSIBLE_DISTANCE_OPTIONS, null_string=NULL_STRING,

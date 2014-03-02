@@ -3,7 +3,7 @@
 ## create a collection
 ## add points based on x_min, x_max, y_min, y_max, x_interval, y_interval to the collection
 from config import MONGODB_HOST, MONGODB_PORT, MONGODB_DB, MONGODB_COLL, X_MIN, X_MAX, X_INTERVAL, \
-    Y_MIN, Y_MAX, Y_INTERVAL, NUM_POINTS_TO_PRINT
+    Y_MIN, Y_MAX, Y_INTERVAL, NUM_POINTS_TO_PRINT, MONGODB_USER, MONGODB_PW
 from pymongo import MongoClient
 from numpy import arange
 
@@ -12,6 +12,7 @@ if __name__ == '__main__':
     # connect to MongoDB
     client = MongoClient(MONGODB_HOST, MONGODB_PORT)
     db = client[MONGODB_DB]
+    db.authenticate(MONGODB_USER, MONGODB_PW)
     print "Connected to DB (Host: %s, Port: %d, DB: %s)" % (MONGODB_HOST, MONGODB_PORT, MONGODB_DB)
 
     # check collection already exists and if so, drop it

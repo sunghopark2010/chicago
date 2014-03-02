@@ -1,8 +1,11 @@
 # config file for ETL
+from os import environ
 from decimal import Decimal, getcontext
 MONGODB_HOST = 'sunghopark.info'
 MONGODB_PORT = 27017
 MONGODB_DB = 'chicago_dev'
+MONGODB_USER = environ['MONGODB_USER']
+MONGODB_PW = environ['MONGODB_PW']
 MONGODB_COLL = 'locs'
 MONGODB_MIN_DISTANCE_FIELD_NAME = 'md'
 MONGODB_MIN_DISTANCE_FACILITY_FIELD_NAME = 'mdfn'

@@ -2,11 +2,38 @@
 <html>
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <style type="text/css">
         html { height: 100% }
         body { height: 100%; margin: 0; padding: 0 }
         td { text-align: center }
-        #map-canvas { height: 100% }
+        th { text-align: center }
+        #map-canvas {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            bottom: -200px;
+            left: 0;
+            right: 0;
+            z-index: 0;
+        }
+        #criteria-form {
+            z-index: 100;
+            position: relative;
+            margin-top: 20px;
+            margin-right: 40px;
+            float: right;
+        }
+        #messages {
+            z-index: 50;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            margin-top: 10px;
+            width: 60%;
+            text-align: center;
+        }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzF5hLaaoTuF_n801biub80XfUWyxAJds&sensor=false">
     </script>
@@ -14,7 +41,8 @@
         function initialize() {
             var mapOptions = {
                 center: new google.maps.LatLng(41.8819, -87.6278),
-                zoom: 11
+                zoom: 11,
+                disableDefaultUI: true
                 };
             var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
@@ -30,28 +58,31 @@
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 
-    <title>CLQ: Chicago Location Query</title>
+    <title>Project Chicago</title>
 </head>
 <body>
     <div id="messages">
-        {% for msg in msgs %}
-        <p>{{ msg }}</p>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>{{ category|capitalize }}:</strong> {{ message }}
+        </div>
         {% endfor %}
+        {% endwith %}
     </div>
 
     <div id="criteria-form">
         <form method="post" action="/">
-            <table>
+            <table class="table-condensed">
                 <tr>
-                    <th>#</th>
-                    <th>Facility Type</th>
-                    <th>Maximum Distance Allowed</th>
+                    <th>Type</th>
+                    <th>Distance</th>
                 </tr>
                 {% for i in range(0, num_criteria) %}
                 <tr>
-                    <td>{{ loop.index }}</td>
                     <td>
-                        <select id="type_{{ i }}" name="type_{{ i }}">
+                        <select id="type_{{ i }}" name="type_{{ i }}" class="form-control">
                             <option value="{{ null_string }}"></option>
                             {% for facility_type in facility_types %}
                             <option value="{{ facility_type.0 }}">{{ facility_type.1 }}</option>
@@ -59,7 +90,7 @@
                         </select>
                     </td>
                     <td>
-                        <select id="distance_{{ i }}" name="distance_{{ i }}">
+                        <select id="distance_{{ i }}" name="distance_{{ i }}" class="form-control">
                             <option value="{{ null_string }}"></option>
                             {% for possible_distance_option in possible_distance_options %}
                             <option value="{{ possible_distance_option }}">{{ possible_distance_option }} mi</option>
@@ -68,8 +99,17 @@
                     </td>
                 </tr>
                 {% endfor %}
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <a href="http://pro.sunghopark.info/post/project-chicago" target="_blank">What is this?</a>
+                    </td>
+                </tr>
             </table>
-            <input type="submit" value="Submit" />
         </form>
     </div>
 

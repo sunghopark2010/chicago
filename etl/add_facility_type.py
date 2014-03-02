@@ -38,6 +38,7 @@ def add_facility_type(csv_path, type_name):
     # connect to MongoDB
     client = MongoClient(MONGODB_HOST, MONGODB_PORT)
     db = client[MONGODB_DB]
+    db.authenticate(MONGODB_USER, MONGODB_PW)
     coll = db[MONGODB_COLL]
     print 'Connected to DB (Host: %s, Port: %d, DB: %s)' % (MONGODB_HOST, MONGODB_PORT, MONGODB_DB)
 
