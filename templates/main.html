@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        td { text-align: center }
+        #map-canvas { height: 100% }
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzF5hLaaoTuF_n801biub80XfUWyxAJds&sensor=false">
+    </script>
+    <script type="text/javascript">
+        function initialize() {
+            var mapOptions = {
+                center: new google.maps.LatLng(41.8819, -87.6278),
+                zoom: 11
+                };
+            var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+            {% for result in results %}
+            var marker{{ loop.index0 }} = new google.maps.Marker({position: new google.maps.LatLng({{ result.x }}, {{ result.y }}), map: map});
+            var infowindow{{ loop.index0 }} = new google.maps.InfoWindow({content: '<table><tr><th>Type</th><th>Distance</th><th>Name</th></tr>{% for place in result.mdf %}<tr><td>{{ place.field_name }}</td><td>{{ '%3.2f mi' % place.md }}</td><td>{{ place.mdfn }}</td></tr>{% endfor %}</table>'});
+            google.maps.event.addListener(marker{{ loop.index0 }}, 'click', function() {
+                infowindow{{ loop.index0 }}.open(map, marker{{ loop.index0 }});
+            });
+            {% endfor %}
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+    <title>CLQ: Chicago Location Query</title>
+</head>
+<body>
+    <div id="messages">
+        {% for msg in msgs %}
+        <p>{{ msg }}</p>
+        {% endfor %}
+    </div>
+
+    <div id="criteria-form">
+        <form method="post" action="/">
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>Facility Type</th>
+                    <th>Maximum Distance Allowed</th>
+                </tr>
+                {% for i in range(0, num_criteria) %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                        <select id="type_{{ i }}" name="type_{{ i }}">
+                            <option value="{{ null_string }}"></option>
+                            {% for facility_type in facility_types %}
+                            <option value="{{ facility_type.0 }}">{{ facility_type.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select id="distance_{{ i }}" name="distance_{{ i }}">
+                            <option value="{{ null_string }}"></option>
+                            {% for possible_distance_option in possible_distance_options %}
+                            <option value="{{ possible_distance_option }}">{{ possible_distance_option }} mi</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+
+    <div id="map-canvas">
+    </div>
+</body>
+</html>
