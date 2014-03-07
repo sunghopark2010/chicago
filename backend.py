@@ -27,7 +27,7 @@ def get_locs(criteria, projections):
     coll = db[MONGODB_COLL]
 
     # find locations that match the criteria
-    locs = coll.find(criteria, projections).limit(MAX_NUM_SEARCH_RESULTS)
+    locs = coll.find(criteria, projections).batch_size(MAX_NUM_SEARCH_RESULTS)
 
     # initialize return variables
     results = list()

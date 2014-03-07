@@ -1,7 +1,7 @@
 from os import environ
 MONGODB_HOST = 'sunghopark.info'
 MONGODB_PORT = 27017
-MONGODB_DB = 'chicago_dev'
+MONGODB_DB = 'chicago_prod'
 MONGODB_COLL = 'locs'
 MONGODB_USER = environ['MONGODB_USER']
 MONGODB_PW = environ['MONGODB_PW']

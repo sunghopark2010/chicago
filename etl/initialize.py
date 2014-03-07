@@ -2,8 +2,8 @@
 ## drop collection if exists
 ## create a collection
 ## add points based on x_min, x_max, y_min, y_max, x_interval, y_interval to the collection
-from config import MONGODB_HOST, MONGODB_PORT, MONGODB_DB, MONGODB_COLL, X_MIN, X_MAX, X_INTERVAL, \
-    Y_MIN, Y_MAX, Y_INTERVAL, NUM_POINTS_TO_PRINT, MONGODB_USER, MONGODB_PW
+from config import MONGODB_HOST, MONGODB_PORT, MONGODB_DB, MONGODB_LOC_COLL, X_MIN, X_MAX, X_INTERVAL, \
+    Y_MIN, Y_MAX, Y_INTERVAL, NUM_POINTS_TO_PRINT, MONGODB_USER, MONGODB_PW, LOC_BATCH_SIZE
 from pymongo import MongoClient
 from numpy import arange
 
@@ -16,17 +16,17 @@ if __name__ == '__main__':
     print "Connected to DB (Host: %s, Port: %d, DB: %s)" % (MONGODB_HOST, MONGODB_PORT, MONGODB_DB)
 
     # check collection already exists and if so, drop it
-    if MONGODB_COLL in db.collection_names(False):
-        print "Collection %s already exists" % MONGODB_COLL
-        db.drop_collection(MONGODB_COLL)
-        print "Collection %s is dropped" % MONGODB_COLL
+    if MONGODB_LOC_COLL in db.collection_names(False):
+        print "Collection %s already exists" % MONGODB_LOC_COLL
+        db.drop_collection(MONGODB_LOC_COLL)
+        print "Collection %s is dropped" % MONGODB_LOC_COLL
 
     # create a new collection
-    db.create_collection(MONGODB_COLL)
-    print "Collection %s is created" % MONGODB_COLL
+    db.create_collection(MONGODB_LOC_COLL)
+    print "Collection %s is created" % MONGODB_LOC_COLL
 
     # insert points based on configuration
-    coll = db[MONGODB_COLL]
+    coll = db[MONGODB_LOC_COLL]
     index = 1
     for x in arange(X_MIN, X_MAX, X_INTERVAL):
         for y in arange(Y_MIN, Y_MAX, Y_INTERVAL):

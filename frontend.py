@@ -9,11 +9,9 @@ app.secret_key = APP_SECRET_KEY
 def main():
     facility_types = get_facility_types()
     if request.method == 'GET':
-        print "hello"
         return render_template('main.html', facility_types=facility_types, num_criteria=NUM_CRITERIA,
                                possible_distance_options=POSSIBLE_DISTANCE_OPTIONS, null_string=NULL_STRING)
     else:
-        msgs = list()
         criteria = dict()
         projections = dict()
 
