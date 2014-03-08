@@ -95,7 +95,7 @@ if __name__ == '__main__':
     #add_facility_type('./facilities/transportation/orange_el_stop.csv', 'orange_el')
     #add_facility_type('./facilities/transportation/pink_el_stop.csv', 'pink_el')
     #add_facility_type('./facilities/transportation/divvy_stations.csv', 'divvy')
-    add_facility_type('./facilities/transportation/metra_stations.csv', 'metra')
+    #add_facility_type('./facilities/transportation/metra_stations.csv', 'metra')
 
     # government
     #add_facility_type('./facilities/government/fire_stations.csv', 'fire_stations')
@@ -110,10 +110,10 @@ if __name__ == '__main__':
     #add_facility_type('./facilities/business/taverns.csv', 'taverns')
     #add_facility_type('./facilities/business/tobacco.csv', 'tobacco')
 
-    #add_facility_type('./facilities/business/tobacco.csv', 'cvs')
-    #add_facility_type('./facilities/business/tobacco.csv', 'enterprise')
-    #add_facility_type('./facilities/business/tobacco.csv', 'ffc')
-    #add_facility_type('./facilities/business/tobacco.csv', 'hertz')
-    #add_facility_type('./facilities/business/tobacco.csv', 'starbucks')
-    #add_facility_type('./facilities/business/tobacco.csv', 'target')
-    #add_facility_type('./facilities/business/tobacco.csv', 'walgreens')
+    add_facility_type('./facilities/business/cvs.csv', 'cvs')
+    add_facility_type('./facilities/business/enterprise.csv', 'enterprise')
+    add_facility_type('./facilities/business/ffc.csv', 'ffc')
+    add_facility_type('./facilities/business/hertz.csv', 'hertz')
+    add_facility_type('./facilities/business/starbucks.csv', 'starbucks')
+    add_facility_type('./facilities/business/target.csv', 'target')
+    add_facility_type('./facilities/business/walgreens.csv', 'walgreens')

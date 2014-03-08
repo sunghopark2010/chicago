@@ -9,15 +9,16 @@ def _make_proper(raw_key):
 
 
 def get_facility_types():
+    facility_types = list()
     client = MongoClient(MONGODB_HOST, MONGODB_PORT)
     db = client[MONGODB_DB]
     db.authenticate(MONGODB_USER, MONGODB_PW)
     coll = db[MONGODB_COLL]
     a_loc = coll.find_one()
-    query_keys = sorted(filter(lambda key: key not in NON_FACILITY_KEYS, a_loc.keys()))
-    display_keys = map(lambda raw_key: _make_proper(raw_key), query_keys)
+    for query_key in sorted(filter(lambda key: key not in NON_FACILITY_KEYS, a_loc.keys())):
+        facility_types.append({'short_name': query_key, 'long_name': _make_proper(query_key), 'selected': False})
     client.disconnect()
-    return zip(query_keys, display_keys)
+    return facility_types
 
 
 def get_locs(criteria, projections):

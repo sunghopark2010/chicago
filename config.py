@@ -17,7 +17,8 @@ Y_KEY = 'y'
 NON_FACILITY_KEYS = [_ID_KEY, X_KEY, Y_KEY]
 
 NUM_CRITERIA = 5
-POSSIBLE_DISTANCE_OPTIONS = [0.1, 0.2, 0.5, 1.0]  # unit: miles
+POSSIBLE_DISTANCE_OPTIONS = [{'value': 0.1, 'selected': False}, {'value': 0.2, 'selected': False},
+                             {'value': 0.5, 'selected': False}]  # unit: miles
 NULL_STRING = 'null'
 MORE_THAN_LIMIT_FOUND_MSG = 'Too many results were found! I am only showing %s results.' % MAX_NUM_SEARCH_RESULTS
 NO_RESULT_FOUND_MSG = 'Sorry - I could not find any location that meets your criteria. Try again with more general criteria.'

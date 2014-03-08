@@ -79,21 +79,21 @@
                     <th>Type</th>
                     <th>Distance</th>
                 </tr>
-                {% for i in range(0, num_criteria) %}
+                {% for facility_options, distance_options in options %}
                 <tr>
                     <td>
-                        <select id="type_{{ i }}" name="type_{{ i }}" class="form-control">
+                        <select id="type_{{ loop.index0 }}" name="type_{{ loop.index0 }}" class="form-control">
                             <option value="{{ null_string }}"></option>
-                            {% for facility_type in facility_types %}
-                            <option value="{{ facility_type.0 }}">{{ facility_type.1 }}</option>
+                            {% for facility_option in facility_options %}
+                            <option value="{{ facility_option.short_name }}"{% if facility_option.selected %} selected{% endif %}>{{ facility_option.long_name }}</option>
                             {% endfor %}
                         </select>
                     </td>
                     <td>
-                        <select id="distance_{{ i }}" name="distance_{{ i }}" class="form-control">
+                        <select id="distance_{{ loop.index0 }}" name="distance_{{ loop.index0 }}" class="form-control">
                             <option value="{{ null_string }}"></option>
-                            {% for possible_distance_option in possible_distance_options %}
-                            <option value="{{ possible_distance_option }}">{{ possible_distance_option }} mi</option>
+                            {% for distance_option in distance_options %}
+                            <option value={{ distance_option.value }}{% if distance_option.selected %} selected{% endif %}>{{ distance_option.value }} mi</option>
                             {% endfor %}
                         </select>
                     </td>
