@@ -1,8 +1,8 @@
 from os import environ
-MONGODB_HOST = 'sunghopark.info'
-MONGODB_PORT = 27017
-MONGODB_DB = 'chicago_prod'
-MONGODB_COLL = 'locs'
+MONGODB_HOST = environ['MONGODB_HOST']
+MONGODB_PORT = int(environ['MONGODB_PORT'])
+MONGODB_DB = environ['MONGODB_DB']
+MONGODB_COLL = environ['MONGODB_COLL']
 MONGODB_USER = environ['MONGODB_USER']
 MONGODB_PW = environ['MONGODB_PW']
 MAX_NUM_SEARCH_RESULTS = 25
