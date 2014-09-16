@@ -1,6 +1,6 @@
 from backend import get_locs, get_facility_types
 from config import NUM_CRITERIA, NULL_STRING, NO_RESULT_FOUND_MSG, NON_FACILITY_KEYS, \
-    MORE_THAN_LIMIT_FOUND_MSG, APP_SECRET_KEY, POSSIBLE_DISTANCE_OPTIONS
+    MORE_THAN_LIMIT_FOUND_MSG, APP_SECRET_KEY, POSSIBLE_DISTANCE_OPTIONS, DEBUG_FLG, HOST, PORT
 from flask import Flask, render_template, request, flash
 import copy
 app = Flask(__name__)
@@ -46,4 +46,4 @@ def main():
         return render_template('main.html', options=options, null_string=NULL_STRING, results=results)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=DEBUG_FLG, host=HOST, port=PORT)
